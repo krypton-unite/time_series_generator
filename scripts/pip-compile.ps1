@@ -1,1 +1,1 @@
-pip-compile setup.py --output-file=requirements-lock.txt
+pip-compile setup.py --output-file=requirements-lock.txt --generate-hashes --upgrade

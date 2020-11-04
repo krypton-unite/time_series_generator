@@ -81,3 +81,11 @@ html_static_path = []
 html_css_files = [
     'css/theme_modifs.css',
 ]
+
+html_context = {
+    "display_github": True, # Integrate GitHub
+    "github_user": "krypton-unite", # Username
+    "github_repo": "time_series_generator", # Repo name
+    "github_version": "master", # Version
+    "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
+}
