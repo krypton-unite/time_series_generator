@@ -4,9 +4,8 @@ from keras_preprocessing.sequence import TimeseriesGenerator as kerasGenerator
 import numpy as np
 import pytest
 import json
-import os
-from pathlib import Path
 from datetime import datetime
+from .helpers import get_json_from_file, get_data_from_file
 
 def test_default_keras_generator():
     data = np.array([[i] for i in range(50)])
@@ -121,9 +120,8 @@ def test_TSG_generator_get_config():
                                    length=10, sampling_rate=2,
                                    batch_size=2)
     config = data_gen.get_config()
-    with open(Path(os.path.abspath('tests'), 'dumped_expected_config.json')) as f:
-        read_config = json.load(f)
-        assert read_config == config
+    read_config = get_json_from_file('tests', 'dumped_expected_config.json')
+    assert read_config == config
 
 
 def test_TSG_generator_to_json():
@@ -134,33 +132,31 @@ def test_TSG_generator_to_json():
                                    length=10, sampling_rate=2,
                                    batch_size=2)
     ts_json = data_gen.to_json()
-    with open(Path(os.path.abspath('tests'), 'dumped_expected_to_json.json')) as f:
-        read_ts_json = json.load(f)
-        assert read_ts_json == json.loads(ts_json)
+    read_ts_json = get_json_from_file('tests', 'dumped_default_tsg.json')
+    assert read_ts_json == json.loads(ts_json)
 
 
 def test_TSG_generator_from_json():
-    with open(Path(os.path.abspath('tests'), 'dumped_default_tsg.json')) as f:
-        read_file = f.read()
-        data_gen = timeseries_generator_from_json(read_file)
+    read_file= get_data_from_file('tests', 'dumped_default_tsg.json')
+    data_gen = timeseries_generator_from_json(read_file)
 
-        assert len(data_gen) == 15
+    assert len(data_gen) == 15
 
-        batch_0 = data_gen[0]
-        x, y = batch_0
-        assert np.array_equal(x,
-                              np.array([[[10],
-                                         [12],
-                                         [14],
-                                         [16],
-                                         [18]],
-                                        [[11],
-                                         [13],
-                                         [15],
-                                         [17],
-                                         [19]]]))
-        assert np.array_equal(y, np.array([[20],
-                                           [21]]))
+    batch_0 = data_gen[0]
+    x, y = batch_0
+    assert np.array_equal(x,
+                            np.array([[[10],
+                                        [12],
+                                        [14],
+                                        [16],
+                                        [18]],
+                                    [[11],
+                                        [13],
+                                        [15],
+                                        [17],
+                                        [19]]]))
+    assert np.array_equal(y, np.array([[20],
+                                        [21]]))
 
 def test_Data_not_JSON_Serializable():
     data = np.array([datetime(1982, 12, 23), datetime(2009, 2, 4)])
