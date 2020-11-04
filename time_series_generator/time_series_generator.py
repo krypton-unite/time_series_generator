@@ -1,14 +1,17 @@
 import numpy as np
 import json
 
-class TimeseriesGenerator(object):
-    """Utility class for generating batches of temporal data.
 
+class TimeseriesGenerator(object):
+    """
+    Utility class for generating batches of temporal data.
     This class takes in a sequence of data-points gathered at
     equal intervals, along with time series parameters such as
     stride, length of history, etc., to produce batches for
     training/validation.
+    """
 
+    """
     # Arguments
         data: Indexable generator (such as list or Numpy array)
             containing consecutive data points (timesteps).

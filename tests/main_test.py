@@ -6,7 +6,7 @@ import pytest
 import json
 import os
 from pathlib import Path
-
+from datetime import datetime
 
 def test_default_keras_generator():
     data = np.array([[i] for i in range(50)])
@@ -150,14 +150,38 @@ def test_TSG_generator_from_json():
         x, y = batch_0
         assert np.array_equal(x,
                               np.array([[[10],
-                              [12],
-                              [14],
-                              [16],
-                              [18]],
-                              [[11],
-                              [13],
-                              [15],
-                              [17],
-                              [19]]]))
+                                         [12],
+                                         [14],
+                                         [16],
+                                         [18]],
+                                        [[11],
+                                         [13],
+                                         [15],
+                                         [17],
+                                         [19]]]))
         assert np.array_equal(y, np.array([[20],
                                            [21]]))
+
+def test_Data_not_JSON_Serializable():
+    data = np.array([datetime(1982, 12, 23), datetime(2009, 2, 4)])
+    targets = np.array([[i] for i in range(2)])
+
+    data_gen = TimeseriesGenerator(data, targets,
+                                   length=1, sampling_rate=1,
+                                   batch_size=1)
+    with pytest.raises(TypeError) as ve:
+        data_gen.get_config()
+
+    assert str(ve.value) == "('Data not JSON Serializable:', [datetime.datetime(1982, 12, 23, 0, 0), datetime.datetime(2009, 2, 4, 0, 0)])"
+
+def test_Targets_not_JSON_Serializable():
+    data = np.array([[i] for i in range(2)])
+    targets = np.array([datetime(1982, 12, 23), datetime(2009, 2, 4)])
+
+    data_gen = TimeseriesGenerator(data, targets,
+                                   length=1, sampling_rate=1,
+                                   batch_size=1)
+    with pytest.raises(TypeError) as ve:
+        data_gen.get_config()
+
+    assert str(ve.value) == "('Targets not JSON Serializable:', [datetime.datetime(1982, 12, 23, 0, 0), datetime.datetime(2009, 2, 4, 0, 0)])"
