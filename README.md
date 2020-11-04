@@ -34,3 +34,17 @@ assert np.array_equal(x,
 assert np.array_equal(y,
                         np.array([[10], [11]]))
 ```
+
+## Development opportunities
+
+> A limitation of the TimeseriesGenerator is that it does not directly support multi-step outputs. Specifically, it will not create the multiple steps that may be required in the target sequence.
+
+> Nevertheless, if you prepare your target sequence to have multiple steps, it will honor and use them as the output portion of each sample. This means the onus is on you to prepare the expected output for each time step.
+
+Brownlee, Jason
+
+- The above process might be automatable.
+
+
+## References
+- [Brownlee, Jason. How to Use the TimeseriesGenerator for Time Series Forecasting in Keras](https://machinelearningmastery.com/how-to-use-the-timeseriesgenerator-for-time-series-forecasting-in-keras/#:~:text=Keras%20provides%20the%20TimeseriesGenerator%20that%20can%20be%20used,defining%20it%20and%20using%20it%20to%20train%20models.#L20)
