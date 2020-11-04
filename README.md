@@ -1,6 +1,6 @@
 # Time Series Generator
 
-[![PyPI version](https://badge.fury.io/py/time-series-generator.svg)](https://badge.fury.io/py/time-series-generator) [![travis](https://travis-ci.org/krypton-unite/time_series_generator.svg?branch=master)](https://travis-ci.org/github/krypton-unite/time_series_generator) [![codecov](https://codecov.io/gh/krypton-unite/time_series_generator/branch/master/graph/badge.svg)](https://codecov.io/gh/krypton-unite/time_series_generator) [![GitHub license](https://img.shields.io/github/license/krypton-unite/time_series_generator)](https://github.com/krypton-unite/time_series_predictor)
+[![PyPI version](https://badge.fury.io/py/time-series-generator.svg)](https://badge.fury.io/py/time-series-generator) [![Documentation Status](https://readthedocs.org/projects/time-series-generator/badge/?version=latest)](https://time-series-generator.readthedocs.io/en/latest/?badge=latest) [![travis](https://travis-ci.org/krypton-unite/time_series_generator.svg?branch=master)](https://travis-ci.org/github/krypton-unite/time_series_generator) [![codecov](https://codecov.io/gh/krypton-unite/time_series_generator/branch/master/graph/badge.svg)](https://codecov.io/gh/krypton-unite/time_series_generator) [![GitHub license](https://img.shields.io/github/license/krypton-unite/time_series_generator)](https://github.com/krypton-unite/time_series_predictor)
 
 
 ## Description

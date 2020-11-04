@@ -28,7 +28,7 @@ setup(
     description="Time Series Generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://time-series-generator.readthedocs.io/en/latest/",
     packages=find_packages(exclude=("tests",)),
     classifiers=[
         "Programming Language :: Python :: 3",
