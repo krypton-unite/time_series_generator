@@ -34,6 +34,22 @@ This documents the `python package`_ sourced from the following `repository`_.
 .. _python package: https://pypi.org/project/time-series-generator/
 .. _repository: https://github.com/krypton-unite/time_series_generator.git
 
+.. image:: images/read_online.*
+   :target: https://time-series-generator.readthedocs.io/en/latest/index.html#
+   :alt: `Read Online`
+   :class: third
+
+.. image:: images/download_pdf.*
+   :target: https://readthedocs.org/projects/time_series_generator/downloads/pdf/latest
+   :alt: `Download PDF`
+   :class: third
+
+.. image:: images/download_epub.*
+   :target: https://readthedocs.org/projects/time_series_generator/downloads/epub/latest/
+   :alt: `Download EPUB`
+   :class: third
+
+
 *****
 Usage
 *****
