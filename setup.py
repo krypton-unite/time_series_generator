@@ -50,6 +50,15 @@ setup(
             'pytest>=4.6',
             'pytest-cov',
             'tensorflow'
+        ],
+        'docs': [
+            'sphinx',
+            'rstcheck',
+            'sphinx-autodoc-typehints',
+            'nbsphinx',
+            'recommonmark',
+            'sphinx_rtd_theme',
+            'sphinxcontrib-svg2pdfconverter'
         ]
     }
 )

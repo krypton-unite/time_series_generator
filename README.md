@@ -35,6 +35,14 @@ assert np.array_equal(y,
                         np.array([[10], [11]]))
 ```
 
+## Test
+
+Run in the terminal at project root folder:
+
+```terminal
+pytest
+```
+
 ## Development opportunities
 
 > A limitation of the TimeseriesGenerator is that it does not directly support multi-step outputs. Specifically, it will not create the multiple steps that may be required in the target sequence.
