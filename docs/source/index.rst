@@ -49,10 +49,15 @@ This documents the `python package`_ sourced from the following `repository`_.
    :alt: `Download EPUB`
    :class: third
 
-
 *****
 Usage
 *****
+
+.. image:: images/machine_learning_mastery.png
+   :target: https://machinelearningmastery.com/how-to-use-the-timeseriesgenerator-for-time-series-forecasting-in-keras/
+   :alt: `Read Online`
+   :class: third
+   :align: center
 
 **************************
 Documentation for the Code
