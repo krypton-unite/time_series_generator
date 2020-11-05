@@ -12,6 +12,8 @@
 #
 import os
 import sys
+from sphinx.builders.latex import LaTeXBuilder
+
 sys.path.insert(0, os.path.abspath('../../../'))
 
 master_doc = 'index'
@@ -43,6 +45,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'nbsphinx',
     'recommonmark',
+    'IPython.sphinxext.ipython_console_highlighting',
 ]
 
 napoleon_google_docstring = False
@@ -82,10 +85,12 @@ html_css_files = [
     'css/theme_modifs.css',
 ]
 
-html_context = {
-    "display_github": True, # Integrate GitHub
-    "github_user": "krypton-unite", # Username
-    "github_repo": "time_series_generator", # Repo name
-    "github_version": "master", # Version
-    "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
-}
+# html_context = {
+#     "display_github": True, # Integrate GitHub
+#     "github_user": "krypton-unite", # Username
+#     "github_repo": "time_series_generator", # Repo name
+#     "github_version": "master", # Version
+#     "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
+# }
+
+# LaTeXBuilder.supported_image_types = ['image/png', 'image/pdf','image/svg+xml' ]

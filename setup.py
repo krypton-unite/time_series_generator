@@ -46,6 +46,7 @@ setup(
             'autopep8',
             'bumpversion',
             'twine',
+            'rstcheck',
         ],
         'test': [
             'pytest>=4.6',
@@ -53,10 +54,11 @@ setup(
             'tensorflow'
         ],
         'docs': [
-            'sphinx',
-            'rstcheck',
-            'sphinx-autodoc-typehints',
             'nbsphinx',
+            'sphinx',
+            'IPython',
+            'ipykernel',
+            'sphinx-autodoc-typehints',
             'recommonmark',
             'sphinx_rtd_theme',
             'sphinxcontrib-svg2pdfconverter'
