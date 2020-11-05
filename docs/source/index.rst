@@ -12,7 +12,7 @@ Time Series Generator documentation
    :alt: PyPI version
 
 .. image:: https://readthedocs.org/projects/time-series-generator/badge/?version=latest
-   :target: https://time-series-generator.readthedocs.io/en/latest/?badge=latest
+   :target: https://readthedocs.org/projects/time-series-generator/
    :alt: Documentation Status
 
 .. image:: https://travis-ci.org/krypton-unite/time_series_generator.svg?branch=master
@@ -24,7 +24,7 @@ Time Series Generator documentation
    :alt: Code Coverage
 
 .. image:: https://img.shields.io/github/license/krypton-unite/time_series_generator
-   :target: https://github.com/krypton-unite/time_series_generator
+   :target: https://github.com/krypton-unite/time_series_generator/blob/master/LICENSE
    :alt: GitHub license
 
 Welcome to Time Series Generator's documentation!
