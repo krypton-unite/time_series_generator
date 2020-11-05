@@ -54,8 +54,10 @@ setup(
             'tensorflow'
         ],
         'docs': [
-            'nbsphinx',
+            'docutils',
             'sphinx',
+            'sphinx-autobuild',
+            'nbsphinx',
             'IPython',
             'ipykernel',
             'sphinx-autodoc-typehints',

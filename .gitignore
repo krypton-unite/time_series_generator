@@ -6,3 +6,4 @@ build/
 dist/
 .vscode/*
 docs/artifacts/
+docs/source/_build/

@@ -180,3 +180,36 @@ def test_Targets_not_JSON_Serializable():
         data_gen.get_config()
 
     assert str(ve.value) == "('Targets not JSON Serializable:', [datetime.datetime(1982, 12, 23, 0, 0), datetime.datetime(2009, 2, 4, 0, 0)])"
+
+def test_univariate_multi_step_TSG_generator():
+    expected_result = get_json_from_file('tests', 'expected_augmented_result.json')
+    # define dataset
+    series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    target = np.array([[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11]])
+    # define generator
+    n_input = 2
+    generator = TimeseriesGenerator(series, target, length=n_input, batch_size=1)
+    # print each sample
+    for i in range(len(generator)):
+        x, y = generator[i]
+        # expected[str(i)]=(x.tolist(), y.tolist())
+        # print('%s => %s' % (x, y))
+        assert np.all(x == expected_result[str(i)][0])
+        assert np.all(y == expected_result[str(i)][1])
+
+def test_augmented_univariate_multi_step_TSG_generator():
+    expected_result = get_json_from_file('tests', 'expected_augmented_result.json')
+    # define dataset
+    series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    target = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    # define generator
+    n_input = 2
+    n_output = 2
+    generator = TimeseriesGenerator(series, target, length=n_input, length_output=n_output, batch_size=1)
+    # print each sample
+    for i in range(len(generator)):
+        x, y = generator[i]
+        print('%s => %s' % (x, y))
+        # expected[str(i)]=(x.tolist(), y.tolist())
+        assert np.all(x == expected_result[str(i)][0])
+        assert np.all(y == expected_result[str(i)][1])

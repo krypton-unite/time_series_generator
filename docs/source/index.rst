@@ -53,11 +53,46 @@ This documents the `python package`_ sourced from the following `repository`_.
 Usage
 *****
 
+Basic Usage
+===========
+
 .. image:: images/machine_learning_mastery.png
    :target: https://machinelearningmastery.com/how-to-use-the-timeseriesgenerator-for-time-series-forecasting-in-keras/
    :alt: `Read Online`
    :class: third
    :align: center
+
+Advanced Usage
+==============
+
+.. code-block:: python
+   :emphasize-lines: 7
+
+   # define dataset
+   series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+   target = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+   # define generator
+   n_input = 2
+   n_output = 2
+   generator = TimeseriesGenerator(series, target, length=n_input, length_output=n_output, batch_size=1)
+   # print each sample
+   for i in range(len(generator)):
+      x, y = generator[i]
+      print('%s => %s' % (x, y))
+
+Output
+------
+
+.. code-block:: terminal
+
+   [[1 2]] => [[3 4]]
+   [[2 3]] => [[4 5]]
+   [[3 4]] => [[5 6]]
+   [[4 5]] => [[6 7]]
+   [[5 6]] => [[7 8]]
+   [[6 7]] => [[8 9]]
+   [[7 8]] => [[9 10]]
+
 
 **************************
 Documentation for the Code

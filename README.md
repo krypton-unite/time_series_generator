@@ -45,6 +45,7 @@ pytest
 
 ## Development opportunities
 
+### Problem
 > A limitation of the TimeseriesGenerator is that it does not directly support multi-step outputs. Specifically, it will not create the multiple steps that may be required in the target sequence.
 
 > Nevertheless, if you prepare your target sequence to have multiple steps, it will honor and use them as the output portion of each sample. This means the onus is on you to prepare the expected output for each time step.
@@ -53,6 +54,33 @@ Brownlee, Jason
 
 - The above process might be automatable.
 
+### Solution
+
+```python
+    # define dataset
+    series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    target = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    # define generator
+    n_input = 2
+    n_output = 2
+    generator = TimeseriesGenerator(series, target, length=n_input, length_output=n_output, batch_size=1)
+    # print each sample
+    for i in range(len(generator)):
+        x, y = generator[i]
+        print('%s => %s' % (x, y))
+```
+
+### Output
+
+```terminal
+[[1 2]] => [[3 4]]
+[[2 3]] => [[4 5]]
+[[3 4]] => [[5 6]]
+[[4 5]] => [[6 7]]
+[[5 6]] => [[7 8]]
+[[6 7]] => [[8 9]]
+[[7 8]] => [[9 10]]
+```
 
 ## References
 - [Brownlee, Jason. How to Use the TimeseriesGenerator for Time Series Forecasting in Keras](https://machinelearningmastery.com/how-to-improve-deep-learning-model-robustness-by-adding-noise/)

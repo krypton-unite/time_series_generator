@@ -20,6 +20,7 @@ class TimeseriesGenerator(object):
         targets: Targets corresponding to timesteps in `data`.
             It should have same length as `data`.
         length: Length of the output sequences (in number of timesteps).
+        length_output: Length of the output sequences (in number of timesteps).
         sampling_rate: Period between successive individual timesteps
             within sequences. For rate `r`, timesteps
             `data[i]`, `data[i-r]`, ... `data[i - length]`
@@ -68,6 +69,7 @@ class TimeseriesGenerator(object):
     """
 
     def __init__(self, data, targets, length,
+                 length_output=1,
                  sampling_rate=1,
                  stride=1,
                  start_index=0,
@@ -85,6 +87,7 @@ class TimeseriesGenerator(object):
         self.data = data
         self.targets = targets
         self.length = length
+        self.length_output = length_output
         self.sampling_rate = sampling_rate
         self.stride = stride
         self.start_index = start_index + length
@@ -102,7 +105,7 @@ class TimeseriesGenerator(object):
                              % (self.start_index, self.end_index))
 
     def __len__(self):
-        return (self.end_index - self.start_index +
+        return (self.end_index - self.start_index + 1 - self.length_output +
                 self.batch_size * self.stride) // (self.batch_size * self.stride)
 
     def __getitem__(self, index):
@@ -116,7 +119,14 @@ class TimeseriesGenerator(object):
 
         samples = np.array([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
-        targets = np.array([self.targets[row] for row in rows])
+        # targets = np.array([self.targets[row if self.length_output == 1 else row - (self.length_output-1):row:self.sampling_rate] for row in rows])
+        raw_targets = {}
+        for idx, row in enumerate(rows):
+            if self.length_output == 1:
+                raw_targets[str(idx)] = self.targets[row]
+            else:
+                raw_targets[str(idx)] = self.targets[self.length + row - self.length_output:row+self.length:self.sampling_rate]
+        targets = np.array(list(raw_targets.values()))
 
         if self.reverse:
             return samples[:, ::-1, ...], targets
@@ -148,6 +158,7 @@ class TimeseriesGenerator(object):
             'data': json_data,
             'targets': json_targets,
             'length': self.length,
+            'length_output': self.length_output,
             'sampling_rate': self.sampling_rate,
             'stride': self.stride,
             'start_index': self.start_index,
