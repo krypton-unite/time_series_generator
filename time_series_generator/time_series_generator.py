@@ -46,7 +46,7 @@ class TimeseriesGenerator(object):
     # Examples
 
     ```python
-    from keras.preprocessing.sequence import TimeseriesGenerator
+    from time_series_generator import TimeseriesGenerator
     import numpy as np
 
     data = np.array([[i] for i in range(50)])
@@ -160,7 +160,7 @@ class TimeseriesGenerator(object):
     def to_json(self, **kwargs):
         """Returns a JSON string containing the timeseries generator
         configuration. To load a generator from a JSON string, use
-        `keras.preprocessing.sequence.timeseries_generator_from_json(json_string)`.
+        `time_series_generator.timeseries_generator_from_json(json_string)`.
 
         # Arguments
             **kwargs: Additional keyword arguments
@@ -186,7 +186,7 @@ def timeseries_generator_from_json(json_string):
             generator configuration.
 
     # Returns
-        A Keras TimeseriesGenerator instance
+        A TimeseriesGenerator instance
     """
     full_config = json.loads(json_string)
     config = full_config.get('config')

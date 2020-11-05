@@ -1,5 +1,4 @@
 from time_series_generator import TimeseriesGenerator, timeseries_generator_from_json
-# from keras_preprocessing.sequence import TimeseriesGenerator as TimeseriesGenerator
 from keras_preprocessing.sequence import TimeseriesGenerator as kerasGenerator
 import numpy as np
 import pytest
