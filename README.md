@@ -4,7 +4,7 @@
 
 
 ## Description
-Emulates Teras Tensorflow TimeSeriesGenerator functionality
+Emulates Teras Tensorflow TimeSeriesGenerator functionality presenting a candidate solution for the direct multi-step outputs limitation in Keras' version.
 
 ## Instalation
 
@@ -43,18 +43,16 @@ Run in the terminal at project root folder:
 pytest
 ```
 
-## Development opportunities
-
-### Problem
-> A limitation of the TimeseriesGenerator is that it does not directly support multi-step outputs. Specifically, it will not create the multiple steps that may be required in the target sequence.
+## Keras' version limitation
+> A limitation of the Keras TimeseriesGenerator is that it does not directly support multi-step outputs. Specifically, it will not create the multiple steps that may be required in the target sequence.
 
 > Nevertheless, if you prepare your target sequence to have multiple steps, it will honor and use them as the output portion of each sample. This means the onus is on you to prepare the expected output for each time step.
 
 Brownlee, Jason
 
-- The above process might be automatable.
+### Candidate Improvement proposed
 
-### Solution
+Addition of the keyworded argument `length_output`.
 
 ```python
     # define dataset
@@ -70,7 +68,7 @@ Brownlee, Jason
         print('%s => %s' % (x, y))
 ```
 
-### Output
+#### Output
 
 ```terminal
 [[1 2]] => [[3 4]]

@@ -49,12 +49,28 @@ This documents the `python package`_ sourced from the following `repository`_.
    :alt: `Download EPUB`
    :class: third
 
+***********
+Description
+***********
+
+Emulates Teras Tensorflow TimeSeriesGenerator functionality presenting a candidate solution for the direct multi-step outputs limitation in Keras version.
+
+
+************
+Installation
+************
+
+.. code-block:: terminal
+
+   pip install time-series-generator
+
+
 *****
 Usage
 *****
 
-Basic Usage
-===========
+Main Functionality
+==================
 
 .. image:: images/machine_learning_mastery.png
    :target: https://machinelearningmastery.com/how-to-use-the-timeseriesgenerator-for-time-series-forecasting-in-keras/
@@ -62,8 +78,13 @@ Basic Usage
    :class: third
    :align: center
 
-Advanced Usage
-==============
+Candidate Improvement
+=====================
+
+.. role:: python(code)
+   :language: python
+
+Addition of the keyworded argument :python:`length_output`.
 
 .. code-block:: python
    :emphasize-lines: 7
