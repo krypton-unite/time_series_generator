@@ -119,7 +119,7 @@ def test_TSG_generator_get_config():
                                    length=10, sampling_rate=2,
                                    batch_size=2)
     config = data_gen.get_config()
-    read_config = get_json_from_file('tests', 'dumped_expected_config.json')
+    read_config = get_json_from_file('tests/helpers', 'dumped_expected_config.json')
     assert read_config == config
 
 
@@ -131,12 +131,12 @@ def test_TSG_generator_to_json():
                                    length=10, sampling_rate=2,
                                    batch_size=2)
     ts_json = data_gen.to_json()
-    read_ts_json = get_json_from_file('tests', 'dumped_default_tsg.json')
+    read_ts_json = get_json_from_file('tests/helpers', 'dumped_default_tsg.json')
     assert read_ts_json == json.loads(ts_json)
 
 
 def test_TSG_generator_from_json():
-    read_file= get_data_from_file('tests', 'dumped_default_tsg.json')
+    read_file= get_data_from_file('tests/helpers', 'dumped_default_tsg.json')
     data_gen = timeseries_generator_from_json(read_file)
 
     assert len(data_gen) == 15
@@ -182,7 +182,7 @@ def test_Targets_not_JSON_Serializable():
     assert str(ve.value) == "('Targets not JSON Serializable:', [datetime.datetime(1982, 12, 23, 0, 0), datetime.datetime(2009, 2, 4, 0, 0)])"
 
 def test_univariate_multi_step_TSG_generator():
-    expected_result = get_json_from_file('tests', 'expected_augmented_result.json')
+    expected_result = get_json_from_file('tests/helpers', 'expected_augmented_result.json')
     # define dataset
     series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     target = np.array([[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11]])
@@ -198,7 +198,7 @@ def test_univariate_multi_step_TSG_generator():
         assert np.all(y == expected_result[str(i)][1])
 
 def test_augmented_univariate_multi_step_TSG_generator():
-    expected_result = get_json_from_file('tests', 'expected_augmented_result.json')
+    expected_result = get_json_from_file('tests/helpers', 'expected_augmented_result.json')
     # define dataset
     series = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     target = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
