@@ -130,7 +130,10 @@ class TimeseriesGenerator(object):
 
         samples = np.stack([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
-        augmented_rows = [row + np.random.randint(-self.augmentation, self.augmentation+1) for row in rows]
+        if self.augmentation:
+            augmented_rows = [row + np.random.randint(-self.augmentation, self.augmentation+1) for row in rows]
+        else:
+            augmented_rows = rows
         targets = np.stack([
             self.targets[
                 row - self.overlap : row + self.length_output : self.sampling_rate_output
