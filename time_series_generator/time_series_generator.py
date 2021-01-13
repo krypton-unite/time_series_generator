@@ -1,6 +1,7 @@
 import numpy as np
 import json
 
+
 class TimeseriesGenerator(object):
     """Utility class for generating batches of temporal data.
 
@@ -74,7 +75,8 @@ class TimeseriesGenerator(object):
                  end_index=None,
                  shuffle=False,
                  reverse=False,
-                 batch_size=128):
+                 batch_size=128,
+                 augmentation=0):
 
         if len(data) != len(targets):
             raise ValueError('Data and targets have to be' +
@@ -96,6 +98,7 @@ class TimeseriesGenerator(object):
         self.shuffle = shuffle
         self.reverse = reverse
         self.batch_size = batch_size
+        self.augmentation = augmentation
 
         if self.start_index + length > self.end_index:
             raise ValueError('`start_index+length=%i > end_index=%i` '
@@ -104,7 +107,7 @@ class TimeseriesGenerator(object):
                              % (self.start_index + length, self.end_index))
 
     def __len__(self):
-        return (self.end_index - self.start_index - self.length + 1 - self.length_output)//(self.batch_size * self.stride) + 1
+        return (self.end_index - self.start_index - self.length + 1 - self.length_output - self.augmentation)//(self.batch_size * self.stride) + 1
 
     def __getitem__(self, index):
         i = self.start_index + self.length + self.batch_size * self.stride * index
@@ -119,11 +122,10 @@ class TimeseriesGenerator(object):
         if self.shuffle:
             np.random.shuffle(rows)
 
-
         samples = np.array([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
         # targets = np.array([self.targets[row] for row in rows])
-        targets = np.array([self.targets[row: row + self.length_output:self.sampling_rate_output]
+        targets = np.array([self.targets[row: row + self.length_output:self.sampling_rate_output + np.random.randint(-self.augmentation, self.augmentation+1)]
                             for row in rows])
 
         if targets.shape[1] == 1:
