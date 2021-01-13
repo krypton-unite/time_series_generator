@@ -107,7 +107,7 @@ class TimeseriesGenerator(object):
                              % (self.start_index + length, self.end_index))
 
     def __len__(self):
-        return (self.end_index - self.start_index - self.length + 1 - self.length_output - self.augmentation)//(self.batch_size * self.stride) + 1
+        return int((self.end_index - self.start_index - self.length + 1 - self.length_output - self.augmentation)//(self.batch_size * self.stride)) + 1
 
     def __getitem__(self, index):
         i = self.start_index + self.length + self.batch_size * self.stride * index
