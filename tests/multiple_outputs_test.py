@@ -29,7 +29,7 @@ def test_augmented_univariate_multi_step_TSG_generator():
 @pytest.mark.usefixtures("expected_msr_result")
 @pytest.mark.parametrize('length_output', [2, 3])
 @pytest.mark.parametrize('sampling_rate_output', [1, 2])
-def test_default_TSG_generator(length_output, sampling_rate_output, expected_msr_result):
+def test_improved_TSG_generator(length_output, sampling_rate_output, expected_msr_result):
     data = np.array([[i] for i in range(50)])
     targets = data
 
@@ -53,3 +53,32 @@ def test_default_TSG_generator(length_output, sampling_rate_output, expected_msr
     assert np.array_equal(x,expected_result['x_1'])
     assert np.array_equal(y,expected_result['y_1'])
 
+# @pytest.mark.skip
+@pytest.mark.usefixtures("expected_msr_result")
+@pytest.mark.parametrize('length_output', [3])
+@pytest.mark.parametrize('sampling_rate_output', [1])
+def test_augmented_TSG_generator(length_output, sampling_rate_output, expected_msr_result):
+    data = np.array([[i] for i in range(50)])
+    targets = data
+
+    data_gen = TimeseriesGenerator(data,
+                                targets,
+                                length=5,
+                                length_output=sampling_rate_output*length_output,
+                                sampling_rate=1,
+                                sampling_rate_output=sampling_rate_output,
+                                stride=10,
+                                batch_size=2,
+                                augmentation=1)
+
+    expected_result = expected_msr_result(length_output, sampling_rate_output)
+    batch_0 = data_gen[0]
+    x, y = batch_0
+    assert np.array_equal(x,expected_result['x_0'])
+    assert y.shape == (2, 3, 1)
+
+    batch_1 = data_gen[1]
+    x, y = batch_1
+    assert np.array_equal(x,expected_result['x_1'])
+    assert y.shape == (2, 3, 1)
+    assert True
