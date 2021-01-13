@@ -4,10 +4,11 @@
     "length": 10,
     "length_output": 1,
     "sampling_rate": 2,
+    "sampling_rate_output": 1,
     "stride": 1,
-    "start_index": 10,
+    "start_index": 0,
     "end_index": 49,
-    "shuffle": false,
-    "reverse": false,
+    "shuffle": false, 
+    "reverse": false, 
     "batch_size": 2
 }

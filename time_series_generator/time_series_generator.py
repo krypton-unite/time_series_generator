@@ -1,17 +1,14 @@
 import numpy as np
 import json
 
-
 class TimeseriesGenerator(object):
-    """
-    Utility class for generating batches of temporal data.
+    """Utility class for generating batches of temporal data.
+
     This class takes in a sequence of data-points gathered at
     equal intervals, along with time series parameters such as
     stride, length of history, etc., to produce batches for
     training/validation.
-    """
 
-    """
     # Arguments
         data: Indexable generator (such as list or Numpy array)
             containing consecutive data points (timesteps).
@@ -20,7 +17,6 @@ class TimeseriesGenerator(object):
         targets: Targets corresponding to timesteps in `data`.
             It should have same length as `data`.
         length: Length of the output sequences (in number of timesteps).
-        length_output: Length of the output sequences (in number of timesteps).
         sampling_rate: Period between successive individual timesteps
             within sequences. For rate `r`, timesteps
             `data[i]`, `data[i-r]`, ... `data[i - length]`
@@ -47,7 +43,7 @@ class TimeseriesGenerator(object):
     # Examples
 
     ```python
-    from time_series_generator import TimeseriesGenerator
+    from keras.preprocessing.sequence import TimeseriesGenerator
     import numpy as np
 
     data = np.array([[i] for i in range(50)])
@@ -68,9 +64,11 @@ class TimeseriesGenerator(object):
     ```
     """
 
-    def __init__(self, data, targets, length,
-                 length_output=1,
+    def __init__(self, data, targets,
+                 length,
                  sampling_rate=1,
+                 length_output=1,
+                 sampling_rate_output=1,
                  stride=1,
                  start_index=0,
                  end_index=None,
@@ -89,8 +87,9 @@ class TimeseriesGenerator(object):
         self.length = length
         self.length_output = length_output
         self.sampling_rate = sampling_rate
+        self.sampling_rate_output = sampling_rate_output
         self.stride = stride
-        self.start_index = start_index + length
+        self.start_index = start_index
         if end_index is None:
             end_index = len(data) - 1
         self.end_index = end_index
@@ -98,35 +97,37 @@ class TimeseriesGenerator(object):
         self.reverse = reverse
         self.batch_size = batch_size
 
-        if self.start_index > self.end_index:
+        if self.start_index + length > self.end_index:
             raise ValueError('`start_index+length=%i > end_index=%i` '
                              'is disallowed, as no part of the sequence '
                              'would be left to be used as current step.'
-                             % (self.start_index, self.end_index))
+                             % (self.start_index + length, self.end_index))
 
     def __len__(self):
-        return (self.end_index - self.start_index + 1 - self.length_output +
-                self.batch_size * self.stride) // (self.batch_size * self.stride)
+        return (self.end_index - self.start_index - self.length + 1 - self.length_output)//(self.batch_size * self.stride) + 1
 
     def __getitem__(self, index):
+        i = self.start_index + self.length + self.batch_size * self.stride * index
+        rows = np.arange(
+            i,
+            min(
+                i + self.batch_size * self.stride,
+                self.end_index + 1
+            ),
+            self.stride
+        )
         if self.shuffle:
-            rows = np.random.randint(
-                self.start_index, self.end_index + 1, size=self.batch_size)
-        else:
-            i = self.start_index + self.batch_size * self.stride * index
-            rows = np.arange(i, min(i + self.batch_size *
-                                    self.stride, self.end_index + 1), self.stride)
+            np.random.shuffle(rows)
+
 
         samples = np.array([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
-        # targets = np.array([self.targets[row if self.length_output == 1 else row - (self.length_output-1):row:self.sampling_rate] for row in rows])
-        raw_targets = {}
-        for idx, row in enumerate(rows):
-            if self.length_output == 1:
-                raw_targets[str(idx)] = self.targets[row]
-            else:
-                raw_targets[str(idx)] = self.targets[self.length + row - self.length_output:row+self.length:self.sampling_rate]
-        targets = np.array(list(raw_targets.values()))
+        # targets = np.array([self.targets[row] for row in rows])
+        targets = np.array([self.targets[row: row + self.length_output:self.sampling_rate_output]
+                            for row in rows])
+
+        if targets.shape[1] == 1:
+            targets = targets.squeeze(1)
 
         if self.reverse:
             return samples[:, ::-1, ...], targets
@@ -160,6 +161,7 @@ class TimeseriesGenerator(object):
             'length': self.length,
             'length_output': self.length_output,
             'sampling_rate': self.sampling_rate,
+            'sampling_rate_output': self.sampling_rate_output,
             'stride': self.stride,
             'start_index': self.start_index,
             'end_index': self.end_index,
@@ -171,7 +173,7 @@ class TimeseriesGenerator(object):
     def to_json(self, **kwargs):
         """Returns a JSON string containing the timeseries generator
         configuration. To load a generator from a JSON string, use
-        `time_series_generator.timeseries_generator_from_json(json_string)`.
+        `keras.preprocessing.sequence.timeseries_generator_from_json(json_string)`.
 
         # Arguments
             **kwargs: Additional keyword arguments
@@ -197,7 +199,7 @@ def timeseries_generator_from_json(json_string):
             generator configuration.
 
     # Returns
-        A TimeseriesGenerator instance
+        A Keras TimeseriesGenerator instance
     """
     full_config = json.loads(json_string)
     config = full_config.get('config')
