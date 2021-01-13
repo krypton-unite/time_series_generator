@@ -1,6 +1,6 @@
 import numpy as np
 import json
-
+import sys
 
 class TimeseriesGenerator(object):
     """Utility class for generating batches of temporal data.
@@ -75,7 +75,7 @@ class TimeseriesGenerator(object):
                  end_index=None,
                  shuffle=False,
                  reverse=False,
-                 batch_size=128,
+                 batch_size=sys.maxsize,
                  augmentation=0):
 
         if len(data) != len(targets):
@@ -107,25 +107,29 @@ class TimeseriesGenerator(object):
                              % (self.start_index + length, self.end_index))
 
     def __len__(self):
+        if self.batch_size == sys.maxsize:
+            return 1
         return int((self.end_index - self.start_index - self.length + 1 - self.length_output - self.augmentation)//(self.batch_size * self.stride)) + 1
 
     def __getitem__(self, index):
-        i = self.start_index + self.length + self.batch_size * self.stride * index
+        i = self.start_index + self.length
+        if index != 0:
+            i = i + self.batch_size * self.stride * index
         rows = np.arange(
             i,
             min(
                 i + self.batch_size * self.stride,
-                self.end_index + 1
+                self.end_index + 2 - self.length_output
             ),
             self.stride
         )
         if self.shuffle:
             np.random.shuffle(rows)
 
-        samples = np.array([self.data[row - self.length:row:self.sampling_rate]
+        samples = np.stack([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
         # targets = np.array([self.targets[row] for row in rows])
-        targets = np.array([self.targets[row: row + self.length_output:self.sampling_rate_output + np.random.randint(-self.augmentation, self.augmentation+1)]
+        targets = np.stack([self.targets[row: row + self.length_output:self.sampling_rate_output + np.random.randint(-self.augmentation, self.augmentation+1)]
                             for row in rows])
 
         if targets.shape[1] == 1:
