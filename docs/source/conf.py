@@ -25,7 +25,7 @@ copyright = '2020, Daniel Kaminski de Souza'
 author = 'Daniel Kaminski de Souza'
 
 # The full version, including alpha/beta/rc tags
-version = '0.1.1'
+version = '0.1.2'
 release = version
 
 
