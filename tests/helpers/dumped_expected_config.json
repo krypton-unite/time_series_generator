@@ -10,5 +10,7 @@
     "end_index": 49,
     "shuffle": false, 
     "reverse": false, 
-    "batch_size": 2
+    "batch_size": 2,
+    "augmentation": 0,
+    "overlap": 0
 }

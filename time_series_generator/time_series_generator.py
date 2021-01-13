@@ -76,7 +76,8 @@ class TimeseriesGenerator(object):
                  shuffle=False,
                  reverse=False,
                  batch_size=sys.maxsize,
-                 augmentation=0):
+                 augmentation=0,
+                 overlap=0):
 
         if len(data) != len(targets):
             raise ValueError('Data and targets have to be' +
@@ -99,6 +100,7 @@ class TimeseriesGenerator(object):
         self.reverse = reverse
         self.batch_size = batch_size
         self.augmentation = augmentation
+        self.overlap = overlap
 
         if self.start_index + length > self.end_index:
             raise ValueError('`start_index+length=%i > end_index=%i` '
@@ -109,7 +111,7 @@ class TimeseriesGenerator(object):
     def __len__(self):
         if self.batch_size == sys.maxsize:
             return 1
-        return int((self.end_index - self.start_index - self.length + 1 - self.length_output - self.augmentation)//(self.batch_size * self.stride)) + 1
+        return int((self.end_index - self.start_index - self.length + 1 - self.length_output + self.overlap - self.augmentation)//(self.batch_size * self.stride)) + 1
 
     def __getitem__(self, index):
         i = self.start_index + self.length
@@ -129,7 +131,7 @@ class TimeseriesGenerator(object):
         samples = np.stack([self.data[row - self.length:row:self.sampling_rate]
                             for row in rows])
         # targets = np.array([self.targets[row] for row in rows])
-        targets = np.stack([self.targets[row: row + self.length_output:self.sampling_rate_output + np.random.randint(-self.augmentation, self.augmentation+1)]
+        targets = np.stack([self.targets[row - self.overlap: row + self.length_output:self.sampling_rate_output + np.random.randint(-self.augmentation, self.augmentation+1)]
                             for row in rows])
 
         if targets.shape[1] == 1:
@@ -173,7 +175,9 @@ class TimeseriesGenerator(object):
             'end_index': self.end_index,
             'shuffle': self.shuffle,
             'reverse': self.reverse,
-            'batch_size': self.batch_size
+            'batch_size': self.batch_size,
+            'augmentation': self.augmentation,
+            'overlap': self.overlap,
         }
 
     def to_json(self, **kwargs):
