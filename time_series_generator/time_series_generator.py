@@ -102,7 +102,9 @@ class TimeseriesGenerator(object):
         self.augmentation = augmentation
         self.overlap = overlap
 
-        if self.start_index + length > self.end_index:
+        # the check below the way it was before didn't make sense since the generator might be used to represent only past data too.
+        # Adding one to the right side of the comparison for that very reason!
+        if self.start_index + length > self.end_index + 1:
             raise ValueError('`start_index+length=%i > end_index=%i` '
                              'is disallowed, as no part of the sequence '
                              'would be left to be used as current step.'
