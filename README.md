@@ -16,7 +16,7 @@ pip install time-series-generator
 
 ```python
 import numpy as np
-from time_series_generator import TimeseriesGenerator
+from time_series_generator import TimeSeriesGenerator
 
 data = np.array([[i] for i in range(50)])
 targets = np.array([[i] for i in range(50)])
