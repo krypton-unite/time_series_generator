@@ -16,12 +16,12 @@ pip install time-series-generator
 
 ```python
 import numpy as np
-from time_series_generator import TimeSeriesGenerator
+from time_series_generator import TimeseriesGenerator
 
 data = np.array([[i] for i in range(50)])
 targets = np.array([[i] for i in range(50)])
 
-data_gen = TimeSeriesGenerator(data, targets,
+data_gen = TimeseriesGenerator(data, targets,
                                 length=10, sampling_rate=2,
                                 batch_size=2)
 assert len(data_gen) == 20
