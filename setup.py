@@ -22,7 +22,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="time_series_generator",
-    version="0.2.5",
+    version="0.2.6",
     author="Daniel Kaminski de Souza",
     author_email="daniel@kryptonunite.com",
     description="Time Series Generator",
