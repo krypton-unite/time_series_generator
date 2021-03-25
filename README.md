@@ -37,6 +37,12 @@ assert np.array_equal(y,
 
 ## Test
 
+Make sure to install test and dev stubs:
+
+```terminal
+pip install -e .[dev,test]
+```
+
 Run in the terminal at project root folder:
 
 ```terminal
