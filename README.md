@@ -1,6 +1,6 @@
 # Time Series Generator
 
-[![PyPI version](https://badge.fury.io/py/time-series-generator.svg)](https://pypi.org/project/time-series-generator/) [![Documentation Status](https://readthedocs.org/projects/time-series-generator/badge/?version=latest)](https://readthedocs.org/projects/time-series-generator/) [![travis](https://travis-ci.org/krypton-unite/time_series_generator.svg?branch=master)](https://travis-ci.org/github/krypton-unite/time_series_generator) [![codecov](https://codecov.io/gh/krypton-unite/time_series_generator/branch/master/graph/badge.svg)](https://codecov.io/gh/krypton-unite/time_series_generator) [![GitHub license](https://img.shields.io/github/license/krypton-unite/time_series_generator)](https://github.com/krypton-unite/time_series_predictor)
+[![PyPI version](https://badge.fury.io/py/time-series-generator.svg)](https://pypi.org/project/time-series-generator/) [![Documentation Status](https://readthedocs.org/projects/time-series-generator/badge/?version=latest)](https://readthedocs.org/projects/time-series-generator/) [![travis](https://app.travis-ci.com/krypton-unite/time_series_generator.svg?branch=master)](https://travis-ci.org/github/krypton-unite/time_series_generator) [![codecov](https://codecov.io/gh/krypton-unite/time_series_generator/branch/master/graph/badge.svg)](https://codecov.io/gh/krypton-unite/time_series_generator) [![GitHub license](https://img.shields.io/github/license/krypton-unite/time_series_generator)](https://github.com/krypton-unite/time_series_predictor) [![Requirements Status](https://requires.io/github/krypton-unite/time_series_generator/requirements.svg?branch=master)](https://requires.io/github/krypton-unite/time_series_generator/requirements/?branch=master)
 
 
 ## Description
@@ -37,16 +37,24 @@ assert np.array_equal(y,
 
 ## Test
 
-Make sure to install test and dev stubs:
+### Install requirements
 
-```terminal
-pip install -e .[dev,test]
+#### Windows:
+```powershell
+.\scripts\init-env.ps1
 ```
+
+#### MacOS / Linux
+```bash
+./scripts/init-env.sh
+```
+
+### Run test
 
 Run in the terminal at project root folder:
 
 ```terminal
-pytest
+pytest -s
 ```
 
 ## Keras' version limitation
