@@ -1,8 +1,9 @@
 import numpy as np
 import json
 import sys
+from keras.utils import data_utils
 
-class TimeseriesGenerator(object):
+class TimeseriesGenerator(data_utils.Sequence):
     """Utility class for generating batches of temporal data.
 
     This class takes in a sequence of data-points gathered at
